@@ -93,3 +93,27 @@
 ### 分析
 
 当调用foo(1)时，a的值为1，result数组里面放入了3个元素，且为函数，如result[0] = function () { total += i * 1; console.log(total) }，函数只是被定义，并未被执行。当调用`result[0]`时，循环体早已结束，i的值变为了3，total = 0 + 3 * 1，且total为全局变量，会被修改，故输出3，6，9。函数只有在被调用时才会执行内部的函数体。
+
+
+## 概念题
+### 题目
+
+js异步加载的方式
+
+### 参考
+
+1）动态脚本加载 document.createElement("script")
+2）defer `<script defer />`
+3）async `<scrpt async />`
+
+
+## 概念题
+### 题目
+
+opacity:0、visibility: hidden、display:none的区别
+
+### 参考
+
+opacity:0 元素不可见，但仍然在页面上，绑定的事件依然会触发
+visibility: hidden 元素不可见，但仍然在页面上，绑定的事件不会触发
+display:none 元素不可见，页面上已消失
