@@ -102,8 +102,8 @@ js异步加载的方式
 
 ### 参考
 
-1）动态脚本加载 document.createElement("script")
-2）defer `<script defer />`
+1）动态脚本加载 document.createElement("script")  
+2）defer `<script defer />`  
 3）async `<scrpt async />`
 
 
@@ -114,6 +114,6 @@ opacity:0、visibility: hidden、display:none的区别
 
 ### 参考
 
-opacity:0 元素不可见，但仍然在页面上，绑定的事件依然会触发
-visibility: hidden 元素不可见，但仍然在页面上，绑定的事件不会触发
+opacity:0 元素不可见，但仍然在页面上，绑定的事件依然会触发  
+visibility: hidden 元素不可见，但仍然在页面上，绑定的事件不会触发  
 display:none 元素不可见，页面上已消失
