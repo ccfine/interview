@@ -156,6 +156,163 @@
       }
     }
 
+
+### 题目
+
+手动实现promise
+
+#### 代码
+
+    function Promise (executor) {
+      this.state = "pending";
+      this.value = null;
+      this.reason = null;
+      this.onFulfilledCallbacks = [];
+      this.onRejectedCallbacks = [];
+
+      const resovle = value => {
+        if (this.state === "pending") {
+          this.state = "fulfilled";
+          this.value = value;
+          this.onFulfilledCallbacks.forEach(func => {
+            func();
+          });
+        }
+      }
+
+      const reject = reason => {
+        if (this.state === "pending") {
+          this.state = "rejected";
+          this.reason = reason;
+          this.onRejectedCallbacks.forEach(func => {
+            func();
+          })
+        }
+      }
+
+      try {
+        executor(resovle, reject);
+      } catch (reason) {
+        reject(reason);
+      }
+    }
+
+    Promise.prototype.then = function (onFulfilled, onRejected) {
+      if (typeof onFulfilled !== "function") {
+        onFulfilled = function (value) {
+          return value;
+        }
+      }
+      if (typeof onRejected !== "function") {
+        onRejected = function (reason) {
+          throw reason;
+        }
+      }
+      return new Promise((resolve, reject) => {
+        switch (this.state) {
+          case "fulfilled":
+            setTimeout(() => {
+              try {
+                const result = onFulfilled(this.value);
+                resolve(result);
+              } catch (reason) {
+                reject(reason);
+              }
+            }, 0);
+            break;
+          case "rejected":
+            setTimeout(() => {
+              try {
+                const result = onRejected(this.reason);
+                resolve(result);
+              } catch (reason) {
+                reject(reason);
+              }
+            }, 0);
+            break;
+          case "pending":
+            this.onFulfilledCallbacks.push(() => {
+              setTimeout(() => {
+                try {
+                  const result = onFulfilled(this.value);
+                  resolve(result);
+                } catch (reason) {
+                  reject(reason);
+                }
+              }, 0);
+            });
+            this.onRejectedCallbacks.push(() => {
+              setTimeout(() => {
+                try {
+                  const result = onRejected(this.reason);
+                  resolve(result);
+                } catch (reason) {
+                  reject(reason)
+                }
+              }, 0);
+            });
+            break;
+        }
+      });
+    }
+
+    Promise.prototype.catch = function (onRejected) {
+      return this.then(null, onRejected);
+    }
+
+    Promise.resolve = function (value) {
+      return new Promise((resolve, reject) => {
+        resolve(value);
+      });
+    }
+
+    Promise.reject = function (reason) {
+      return new Promise((resolve, reject) => {
+        reject(reason);
+      });
+    }
+
+    Promise.all = function (promises) {
+      return new Promise ((resolve, reject) => {
+        if (promises.length === 0) {
+          resolve([]);
+        } else {
+          let result = [];
+          let index = 0;
+          for (let i = 0; i < promises.length; i++) {
+            promise[i].then(data => {
+              result[i] = data;
+              index++;
+              if (index === promises.length) {
+                resolve(result);
+              }
+            }, err => {
+              reject(err);
+              return;
+            });
+          }
+        }
+      });
+    }
+
+    Promise.race = function (promises) {
+      return new Promise((resolve, reject) => {
+        if (promises.length === 0) {
+          resolve();
+        } else {
+          for (let i = 0; i < promises.length; i++) {
+            promises[i].then(data => {
+              resolve(data);
+            }, err => {
+              reject(err);
+              return;
+            });
+          }
+        }
+      });
+    }
+
+
 ## 概念题
 
 ### 题目
