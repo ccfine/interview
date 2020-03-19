@@ -1,11 +1,12 @@
 # 面试记录、总结
 
-## 编程题（字节跳动）
-### 题目
+## 编程题
+
+### 题目（字节跳动）
 
 函数a，当偶数次调用时输出1，奇数次调用时输出2
 
-### 示列
+#### 代码
 
     function a () {
       let count = 1;
@@ -20,12 +21,11 @@
     }
 
 
-## 防抖与节流（字节跳动）
-### 防抖
+### 题目（字节跳动）
 
-触发一个事件后，n秒后才会执行，如果在n秒内又触发了这个事件，就以新的事件的时间为准，n秒后执行
+防抖：触发一个事件后，n秒后才会执行，如果在n秒内又触发了这个事件，就以新的事件的时间为准，n秒后执行
 
-#### 示列
+#### 代码
 
     function debounce (event, time) {
       let timer = null;
@@ -37,11 +37,12 @@
       }
     }
 
-### 节流
 
-不管频率多高，单位时间内只执行一次
+### 题目（字节跳动）
 
-#### 示列
+节流：不管频率多高，单位时间内只执行一次
+
+#### 代码
 
     function throttle (event, time) {
       let pre = 0;
@@ -66,8 +67,7 @@
     }
 
 
-## 编程题（字节跳动）
-### 题目
+### 题目（字节跳动）
 
     var total = 0;
     var a = 3;
@@ -86,44 +86,105 @@
     result[1]();
     result[2]();
 
-### 结果
+#### 参考
 
 3 6 9
-
-### 分析
 
 当调用foo(1)时，a的值为1，result数组里面放入了3个元素，且为函数，如result[0] = function () { total += i * 1; console.log(total) }，函数只是被定义，并未被执行。当调用`result[0]`时，循环体早已结束，i的值变为了3，total = 0 + 3 * 1，且total为全局变量，会被修改，故输出3，6，9。函数只有在被调用时才会执行内部的函数体。
 
 
+### 题目
+
+手动实现call
+
+#### 代码
+
+    Function.prototype.call = function (context, ...args) {
+      if (this === Function.prototype) {
+        return undefined;
+      }
+      context = context || window;
+      const fn = Symbol();
+      context[fn] = this;
+      const result = context[fn](...args);
+      delete context[fn];
+      return result;
+    }
+
+
+### 题目
+
+手动实现apply
+
+#### 代码
+
+    Function.prototype.apply = function (context, ...args) {
+      if (this === Function.prototype) {
+        return undefined;
+      }
+      context = context || window;
+      const fn = Symbol();
+      context[fn] = this;
+      let result;
+      if (Array.isArray(args)) {
+        result = context[fn](...args);
+      } else {
+        result = context[fn]();
+      }
+      delete context[fn];
+      return result;
+    }
+
+
+### 题目
+
+手动实现bind
+
+#### 代码
+
+    Function.prototype.bind = function (context, ...args1) {
+      if (this === Function.prototype) {
+        throw new TypeError("error");
+      }
+      const _this = this;
+      return function F (...args2) {
+        if (this instanceof F) {
+          return new _this(...args1, ...args2);
+        } else {
+          return _this.apply(context, args1.concat(args2));
+        }
+      }
+    }
+
 ## 概念题
+
 ### 题目
 
 js异步加载的方式
 
-### 参考
+#### 参考
 
-1）动态脚本加载 document.createElement("script")  
-2）defer `<script defer />`  
-3）async `<scrpt async />`
+* 动态脚本加载 document.createElement("script")  
+* defer `<script defer />`  
+* async `<scrpt async />`
 
 
-## 概念题
 ### 题目
 
 opacity:0、visibility: hidden、display:none的区别
 
-### 参考
+#### 参考
 
 opacity:0 元素不可见，但仍然在页面上，绑定的事件依然会触发  
 visibility: hidden 元素不可见，但仍然在页面上，绑定的事件不会触发  
 display:none 元素不可见，页面上已消失
 
-## 概念题（腾讯）
-### 题目
+
+### 题目（腾讯）
 
 浏览器是多线程还是单线程
 
-### 参考
+#### 参考
 
 浏览器是多线程，分别有：
 * js引擎线程（多线程，但有一个主线程）
