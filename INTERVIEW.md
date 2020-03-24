@@ -313,6 +313,22 @@
     }
 
 
+### 题目
+
+random7()函数返回1-7随机整数，用random7()构造random10()，返回1-10随机整数
+
+#### 代码
+
+    function random10 () {
+      let i;
+      do {
+        i = (random7() - 1) * 7 + random7();
+      }
+      while (i > 40);
+      return i % 10 + 1;
+    }
+
+
 ## 概念题
 
 ### 题目
