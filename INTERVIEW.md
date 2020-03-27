@@ -329,6 +329,29 @@ random7()函数返回1-7随机整数，用random7()构造random10()，返回1-10
     }
 
 
+### 题目（腾讯）
+
+ipv4地址（数字 . 空格组成）转化为32位整数
+
+#### 代码
+
+    function transIpv4 (ipv4) {
+      ipv4 = ipv4.replace(/\s/g, ".").split(".");
+      let ipv4Str = "";
+      for (let i = 0; i < ipv4.length; i++) {
+        let item = "";
+        let itemPrefix = "";
+        let itemStr = Number(ipv4[i]).toString(2);
+        for (j = 0; j < 8 - itemStr.length; j++) {
+          itemPrefix += "0";
+        }
+        item = itemPrefix + itemStr;
+        ipv4Str += item;
+      }
+      return parseInt(ipv4Str, 2);
+    }
+
+
 ## 概念题
 
 ### 题目
