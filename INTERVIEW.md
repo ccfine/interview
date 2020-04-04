@@ -352,6 +352,42 @@ ipv4地址（数字 . 空格组成）转化为32位整数
     }
 
 
+### 题目（腾讯）
+
+给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+
+#### 代码
+
+    function findMedianSortedArrays (nums1, nums2) {
+      var m = nums1.length;
+      var n = nums2.length;
+      var l = Math.floor((m + n + 1) / 2);
+      var r = Math.floor((m + n + 2) / 2);
+      return (getMid(nums1, 0 , nums2, 0, l) + getMid(nums1, 0, nums2, 0, r)) / 2;
+    }
+
+    function getMid (nums1, i, nums2, j, k) {
+      if (i >= nums1.length) {
+        return nums2[j + k - 1];
+      }
+      if (j >= nums2.length) {
+        return nums1[i + k - 1];
+      }
+      if (k === 1) {
+        return Math.min(nums1[i], nums2[j]);
+      }
+      var nums1Mid = i + Math.floor(k / 2) - 1 < nums1.length ? nums1[i + Math.floor(k / 2) - 1] : Infinity;
+      var nums2Mid = j + Math.floor(k / 2) - 1 < nums2.length ? nums2[j + Math.floor(k / 2) - 1] : Infinity;
+      if (nums1Mid < nums2Mid) {
+        return getMid(nums1, i + Math.floor(k / 2), nums2, j, k - k / 2);
+      } else {
+        return getMid(nums1, i, nums2, j + Math.floor(k / 2), k - k / 2); 
+      }
+    }
+
+#### [参考](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/man-hua-ru-guo-qi-ta-de-ti-jie-ni-kan-bu-dong-na-j/)
+
+
 ## 概念题
 
 ### 题目
