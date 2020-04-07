@@ -388,6 +388,29 @@ ipv4地址（数字 . 空格组成）转化为32位整数
 #### [参考](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/man-hua-ru-guo-qi-ta-de-ti-jie-ni-kan-bu-dong-na-j/)
 
 
+### 题目（腾讯）
+
+实现一个方法decodeStr，输入一个字符串，根据约定规则输出编码结果。约定规则如下：str = "2[a]1[bc]", 返回 "aabc"；str = "2[e2[d]]", 返回 "eddedd"；str = "3[abc]2[cd]ff", 返回 "abcabcabccdcdff"
+
+#### 代码
+
+    function decodeStr (str) {
+      const left = str.lastIndexOf("[");
+      const right = str.indexOf("]", left);
+      if (left === -1 && right === -1) {
+        return str;
+      }
+      const repeat = !isNaN(str[left - 1]) ? str[left - 1] * 1 : 0;
+      let repeatStr = "";
+      let newStr = "";
+      for (let i = repeat; i > 0; i--) {
+        repeatStr += str.slice(left + 1, right);
+      }
+      newStr = str.slice(0, left - 1) + repeatStr + str.slice(right + 1);
+      decodeStr(newStr);
+    }
+
+
 ## 概念题
 
 ### 题目
