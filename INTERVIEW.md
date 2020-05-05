@@ -32,6 +32,7 @@
       return function (...args) {
         clearTimeout(timer);
         timer = setTimeout(() => {
+          timer = null;
           event.apply(this, args);
         }, time);
       }
@@ -379,9 +380,9 @@ ipv4地址（数字 . 空格组成）转化为32位整数
       var nums1Mid = i + Math.floor(k / 2) - 1 < nums1.length ? nums1[i + Math.floor(k / 2) - 1] : Infinity;
       var nums2Mid = j + Math.floor(k / 2) - 1 < nums2.length ? nums2[j + Math.floor(k / 2) - 1] : Infinity;
       if (nums1Mid < nums2Mid) {
-        return getMid(nums1, i + Math.floor(k / 2), nums2, j, k - k / 2);
+        return getMid(nums1, i + Math.floor(k / 2), nums2, j, k - Math.floor(k / 2));
       } else {
-        return getMid(nums1, i, nums2, j + Math.floor(k / 2), k - k / 2); 
+        return getMid(nums1, i, nums2, j + Math.floor(k / 2), k - Math.floor(k / 2)); 
       }
     }
 
