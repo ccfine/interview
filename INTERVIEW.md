@@ -412,6 +412,44 @@ ipv4地址（数字 . 空格组成）转化为32位整数
     }
 
 
+### 题目（腾讯）
+
+    function F () {}
+    F.a = 100;
+    F.prototype.b = 200;
+    var z = new F();
+    z.a;
+    z.b;
+
+#### 参考
+
+undefined 200
+
+
+### 题目（腾讯）
+
+    function fun (n, k) {
+      console.log(k);
+      return {
+        fun: function (m) {
+          return fun(m, n);
+        }
+      };
+    }
+
+    var a = fun(0);
+    a.fun(1);
+    a.fun(2);
+    a.fun(3);
+    var b = fun(0).fun(1).fun(2).fun(3);
+
+#### 参考
+
+undefined 0 0 0 undefined 0 1 2
+
+值来自于上一次的传参
+
+
 ## 概念题
 
 ### 题目
