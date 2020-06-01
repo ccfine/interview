@@ -450,6 +450,37 @@ undefined 0 0 0 undefined 0 1 2
 值来自于上一次的传参
 
 
+### 题目（腾讯）
+
+给定一个整数数组nums和一个目标值target，求数组中两数相加和为target的两个整数的下标
+
+#### 代码（暴力法）
+
+    function twoSum (nums, target) {
+      const length = nums.length;
+      for (let i = 0; i < length; i++) {
+        for (let j = i + 1; j < length; j++) {
+          if (nums[i] + nums[j] === target) {
+            return [i, j];
+          }
+        }
+      }
+    }
+
+#### 代码（哈希表）
+
+    function twoSum (nums, target) {
+      let map = new Map();
+      for (let i = 0; i < nums.length; i++) {
+        const match = target - nums[i];
+        if (map.has(match)) {
+          return [map.get(match), i];
+        }
+        map.set(nums[i], i);
+      }
+    }
+
+
 ## 概念题
 
 ### 题目
